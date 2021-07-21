@@ -66,3 +66,5 @@ map <C-l> <C-w>l
 " placeholder guide
 inoremap <Space><Space> <Esc>/<++><Enter>"_c4l
 
+autocmd FileType tex map ;c :!latexmk document.tex -outdir=build -pdf<CR><CR>
+autocmd FileType tex map ;p :!mupdf ./build/document.pdf & disown<CR><CR>
