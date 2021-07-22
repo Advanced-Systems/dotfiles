@@ -28,7 +28,6 @@ set nowb
 set noswapfile
 set lazyredraw		" disable redraws during macro execution to improve performance
 
-
 " format status lines
 set statusline=
 set statusline+=%1*\ %n\ %*     " buffer number
@@ -41,6 +40,9 @@ set statusline+=%2*/%L%*        " total no of lines
 set statusline+=%1*%4v\ %*      " virtual column no
 set statusline+=%2*0x%04B\ %*   " character under cursor
 
+if has('termguicolors')
+    set termguicolors
+endif
 
 " enable auto-completion
 set wildmode=longest,list,full
@@ -68,3 +70,4 @@ inoremap <Space><Space> <Esc>/<++><Enter>"_c4l
 
 autocmd FileType tex map ;c :!latexmk document.tex -outdir=build -pdf<CR><CR>
 autocmd FileType tex map ;p :!mupdf ./build/document.pdf & disown<CR><CR>
+autocmd FileType tex map ;d :!latexmk -C -outdir=build<CR>
