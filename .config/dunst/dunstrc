@@ -1,0 +1,108 @@
+#
+# (C) 2021 Advanced Systems
+#
+
+[global]
+    monitor = 0
+    # display notification on focused monitor
+    follow = mouse
+    # [{width}x{height}[+/-{x}+/-{y}]]
+    geometry = "0x0-20+30"
+    # turn on progress bar (appears when a progress hint is passed)
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+    # show how many messages are currently hidden because of geometry
+    indicate_hidden = yes
+    # shrink window if it's smaller than the width (ignored if set to 0)
+    shrink = no
+    # range [0,100] - ignored if a compositing window manager is present
+    transparency = 0
+    # set 0 to disable
+    separator_height = 2
+    # between text and separator
+    padding = 8
+    horizontal_padding = 8
+    # padding between text and icon
+    text_icon_padding = 0
+    # defines width in pixels of frame around the notification window (set 0 to disable)
+    frame_width = 3
+    frame_color = "#aaaaaa"
+    # possible values: auto, foreground, frame
+    separator_color = frame
+    # by urgency
+    sort = yes
+    # don't remove notifications if the user is idle for longer than idle_threshold seconds
+    idle_threshold = 120
+    font = Monospace 10
+    line_height = 1.2
+    # enable HTML notification rendering
+    markup = full
+    # possible values:
+    # %a (app name)
+    # %s (summary)
+    # %b (body)
+    # %i (icon name including its path)
+    # %I (icon name without its path)
+    # %p (progress value if set)
+    # %n (progress value if set without any extra characters)
+    # %% (literal percent sign)
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    # age of message if greater than show_age_threshold (set to -1 to disable)
+    show_age_threshold = 60
+    word_wrap = yes
+    # when word_wrap is set to no, specify where to make an ellipsis in long lines (start, middle, end)
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = yes
+    hide_duplicate_count = no
+    # for URLs (U) and actions (A)
+    show_indicators = yes
+    icon_position = left
+    # scale small icons up to size (set to 0 to disable)
+    min_icon_size = 0
+    # takes precedence over min_icon_size
+    max_icon_size = 32
+    icon_path = /usr/share/icons/Adwaita/16x16/status:/usr/share/icons/Adwaita/16x16/devices
+    # should a notification popped up from history be sticky or timeout as if it would normally do
+    sticky_history = yes
+    # max value
+    history_length = 20
+    # dmenu path
+    dmenu = /usr/local/bin/dmenu -p dunst:
+    # default browser
+    browser = /usr/bin/firefox -new-tab
+    # always run rule-defined scripts even if notifications are suppressed
+    always_run_script = true
+    # window title spawned by dunst
+    title = Dunst
+    class = Dunst
+    # this is mainly for error detection, since dbus restarts dunst
+    startup_notification = false
+    # possible values: crit, warn, mesg, info, debug
+    verbosity = mesg
+    corner_radius = 0
+    # useful to enforce the timeout set by dunst config; without this notifications may close before user-defined timeout
+    ignore_dbusclose = false
+[urgency_low]
+    background = "#222222"
+    foreground = "#888888"
+    timeout = 10
+[urgency_normal]
+    background = "#285577"
+    foreground = "#ffffff"
+    timeout = 10
+    icon = /usr/share/icons/Adwaita/16x16/apps/preferences-system-notifications-symbolic.symbolic.png
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
+    timeout = 0
+    icon = /usr/share/icons/Adwaita/16x16/status/dialog-warning-symbolic.symbolic.png
+[espeak]
+    summary = "*"
+    script = dunst_espeak.sh
