@@ -58,6 +58,14 @@ screenshot(){
         return 0
     fi
 }
+
+prompt(){
+    [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2"
+}
+
+goodbye(){
+    prompt "Do you want to turn off your computer?" "shutdown now"
+}
 # +++ end macros
 
 # custom shortcuts
