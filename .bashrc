@@ -11,7 +11,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export USE_EMOJI=0
 # +++ end environment variables
 
-# +++ begin prompt functions
+# +++ begin macros
 parse_git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -24,16 +24,13 @@ parse_venv(){
     fi
     [[ -n "$venv" ]] && echo " ($venv) "
 }
-# +++ end prompt functions
 
-# +++ begin macros
 gpip(){
     PIP_REQUIRE_VIRTUALENV=false python -m pip "$@"
 }
 
 screenshot(){
     local filename="screenshot.png"
-    # screenshot options
     case "$1" in
         window)
             import -window root "$filename"
@@ -45,7 +42,6 @@ screenshot(){
             echo "invalid option"
             ;;
     esac
-    # upload to anonfile
     if [[ -f "$filename" ]]; then
         local anon=$(anonfile --verbose upload --file "$filename")
         echo "$anon"
@@ -54,7 +50,7 @@ screenshot(){
         rm "$filename"
         return 1
     else
-        echo "aborting program execution"
+        echo "aborting operation"
         return 0
     fi
 }
@@ -67,8 +63,16 @@ goodbye(){
     prompt "Do you want to turn off your computer?" "shutdown now"
 }
 
+goodnight(){
+    prompt "Do you want to go to sleep?" "systemctl suspend"
+}
+
 mkcd(){
     mkdir -p -- "$1" && cd -- "$1"
+}
+
+findfile(){
+    find . -iname "$@*" 2>&1 | grep -v "operation not permitted"
 }
 
 power(){
@@ -84,7 +88,7 @@ alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
 alias count='find . -type f | wc -l'
-alias repos='cd ~/documents/repos'
+alias repos='cd -- ~/documents/repos'
 
 # dotfiles handler
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
