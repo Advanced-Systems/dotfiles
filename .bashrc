@@ -60,11 +60,19 @@ screenshot(){
 }
 
 prompt(){
-    [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2"
+    [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2" || echo -e "$(tput setaf 184)alright$(tput sgr 0)"
 }
 
 goodbye(){
     prompt "Do you want to turn off your computer?" "shutdown now"
+}
+
+mkcd(){
+    mkdir -p -- "$1" && cd -- "$1"
+}
+
+power(){
+    echo -e "$(cat /sys/class/power_supply/BAT0/capacity)%"
 }
 # +++ end macros
 
@@ -72,7 +80,11 @@ goodbye(){
 alias cls=clear
 alias ls='ls -g --color=auto'
 alias resource='source ~/.bashrc'
+alias reload='exec $SHELL -l'
+alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
+alias count='find . -type f | wc -l'
+alias repos='cd ~/documents/repos'
 
 # dotfiles handler
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
