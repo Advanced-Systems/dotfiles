@@ -12,11 +12,11 @@ export USE_EMOJI=0
 # +++ end environment variables
 
 # +++ begin prompt functions
-function parse_git_branch(){
+parse_git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-function parse_venv(){
+parse_venv(){
     if [[ -n "$VIRTUAL_ENV" ]]; then
         venv="${VIRTUAL_ENV##*/}"
     else
@@ -27,11 +27,11 @@ function parse_venv(){
 # +++ end prompt functions
 
 # +++ begin macros
-function gpip(){
+gpip(){
     PIP_REQUIRE_VIRTUALENV=false python -m pip "$@"
 }
 
-function screenshot(){
+screenshot(){
     local filename="screenshot.png"
     # screenshot options
     case "$1" in
@@ -64,13 +64,7 @@ function screenshot(){
 alias cls=clear
 alias ls='ls -g --color=auto'
 alias resource='source ~/.bashrc'
-alias goodbye='shutdown now'
 alias update='sudo pacman -Syu --noconfirm'
-
-export -f parse_git_branch
-export -f parse_venv
-export -f gpip
-export -f screenshot
 
 # dotfiles handler
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
