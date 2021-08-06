@@ -30,6 +30,34 @@ function parse_venv(){
 function gpip(){
     PIP_REQUIRE_VIRTUALENV=false python -m pip "$@"
 }
+
+function screenshot(){
+    local filename="screenshot.png"
+    # screenshot options
+    case "$1" in
+        window)
+            import -window root "$filename"
+            ;;
+        area)
+            import "$filename"
+            ;;
+        *)
+            echo "invalid option"
+            ;;
+    esac
+    # upload to anonfile
+    if [[ -f "$filename" ]]; then
+        local anon=$(anonfile --verbose upload --file "$filename")
+        echo "$anon"
+        local url=${anon#"URL: "}
+        echo -n "$url" | xclip -selection clipboard
+        rm "$filename"
+        return 1
+    else
+        echo "aborting program execution"
+        return 0
+    fi
+}
 # +++ end macros
 
 # custom shortcuts
@@ -42,6 +70,7 @@ alias update='sudo pacman -Syu --noconfirm'
 export -f parse_git_branch
 export -f parse_venv
 export -f gpip
+export -f screenshot
 
 # dotfiles handler
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
