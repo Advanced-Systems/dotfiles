@@ -5,10 +5,22 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# +++ begin shell variables
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+HISTSIZE=10000
+HISTFILESIZE=10000000
+HISTIGNORE='htop:ncdu:ls:mkdir:mkcd:touch:pwd:cd'
+HISTCONTROL='ignoreboth:erasedups'
+# +++ end shell variables
+
 # +++ begin environment variables
 export PATH=~/.local/bin:$PATH
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export USE_EMOJI=0
+export EDITOR=nvim
+export VISUAL=nvim
+export LANG=en_US.UTF-8
 # +++ end environment variables
 
 # +++ begin macros
@@ -55,8 +67,16 @@ screenshot(){
     fi
 }
 
+make(){
+    if [[ "$@" == "love" ]]; then
+        echo -e "not war?"
+    else
+        command make "$@"
+    fi
+}
+
 prompt(){
-    [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2" || echo -e "$(tput setaf 184)alright$(tput sgr 0)"
+    [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2" || echo -e "$(tput setaf 184)aight$(tput sgr 0)"
 }
 
 goodbye(){
@@ -72,7 +92,7 @@ mkcd(){
 }
 
 findfile(){
-    find . -iname "$@*" 2>&1 | grep -v "operation not permitted"
+    find . -iname "$@*" 2>&1 | grep -v "permission denied"
 }
 
 power(){
@@ -98,4 +118,3 @@ PS1='[$(tput setaf 43)\u$(tput sgr 0)@\h $(tput setaf 41)\W$(tput sgr 0)]'  # [u
 PS1+='$(tput setaf 184)$(parse_git_branch)$(tput sgr 0)'                    # (branch)
 PS1+='$(tput setaf 69)$(parse_venv)$(tput sgr 0)'                           # (venv)
 PS1+='\nφ '
-export PS1
