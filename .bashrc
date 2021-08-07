@@ -67,6 +67,42 @@ screenshot(){
     fi
 }
 
+extract(){
+    if [[ -f "$1" ]]; then
+        case "$1" in
+            *.zip)
+                unzip -nv "$1"
+                ;;
+            *.rar)
+                7z x "$1"
+                ;;
+            *.7z)
+                7z x "$1"
+                ;;
+            *.tar)
+                tar -xfv "$1"
+                ;;
+            *.tar.gz)
+                tar -xzfv "$1"
+                ;;
+            *.tar.bz2)
+                tar -xjfv "$1"
+                ;;
+            *.tar.xz)
+                tar -xJv "$1"
+                ;;
+            *.tar.zst)
+                unzstd -v "$1"
+                ;;
+            *)
+                echo -e "$(tput setaf 196)cannot extract '$1': unknown file extension$(tput sgr 0)"
+                ;;
+        esac
+    else
+        echo -e "$(tput setaf 196)cannot extract '$1': not a file$(tput sgr 0)"
+    fi
+}
+
 make(){
     if [[ "$@" == "love" ]]; then
         echo -e "not war?"
