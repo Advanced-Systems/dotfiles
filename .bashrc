@@ -71,7 +71,7 @@ extract(){
     if [[ -f "$1" ]]; then
         case "$1" in
             *.zip)
-                unzip -nv "$1"
+                python -m zipfile -e "$1" .
                 ;;
             *.rar)
                 7z x "$1"
@@ -80,16 +80,16 @@ extract(){
                 7z x "$1"
                 ;;
             *.tar)
-                tar -xfv "$1"
+                tar xfv "$1"
                 ;;
             *.tar.gz)
-                tar -xzfv "$1"
+                tar xzfv "$1"
                 ;;
             *.tar.bz2)
-                tar -xjfv "$1"
+                tar xjfv "$1"
                 ;;
             *.tar.xz)
-                tar -xJv "$1"
+                tar xJv "$1"
                 ;;
             *.tar.zst)
                 unzstd -v "$1"
@@ -139,10 +139,12 @@ power(){
 # custom shortcuts
 alias cls=clear
 alias ls='ls -g --color=auto'
+alias lss='du -h --max-depth=1 -- * | sort -hr'
 alias resource='source ~/.bashrc'
 alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
+alias read=mupdf
 alias count='find . -type f | wc -l'
 alias repos='cd -- ~/documents/repos'
 
