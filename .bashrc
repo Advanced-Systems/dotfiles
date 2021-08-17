@@ -111,6 +111,35 @@ make(){
     fi
 }
 
+grepo(){
+    git clone git@github.com:$(git config --global user.name)/"$1".git
+}
+
+mk-ssh-key(){
+    echo -n "Do you want to use your email address that is stored in your global git settings? [Y/n]: "
+    read answer
+    local mail="n/a"
+
+
+    if [[ "$answer" == [Yy] || "$answer" == "" ]]; then
+        mail=$(git config --global user.email)
+    else
+        read -p "Enter an email address: " mail
+    fi
+
+    read -p "Enter a name for the public key file: " pkeyname
+    read -s -p "Enter a passphrase: " passphrase
+
+    # don't overwrite ~/.ssh/id_rsa if it already exists
+    cat /dev/zero | ssh-keygen -t rsa -b 4096 -C $mail -f ~/.ssh/$pkeyname -q -N $passphrase
+    eval $(ssh-agent -s)
+    ssh-add ~/.ssh/$pkeyname
+    cat ~/.ssh/$pkeyname.pub | xclip -selectio clipboard
+
+    echo -e "$(tput setaf 184)Copied the public key to clipboard$(tput sgr 0)"
+    return 0
+}
+
 prompt(){
     [ $(echo -e "No\nYes" | dmenu -i -p "$1") == "Yes" ] && eval "$2" || echo -e "$(tput setaf 184)aight$(tput sgr 0)"
 }
@@ -144,7 +173,6 @@ alias resource='source ~/.bashrc'
 alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
-alias read=mupdf
 alias count='find . -type f | wc -l'
 alias repos='cd -- ~/documents/repos'
 
