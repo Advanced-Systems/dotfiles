@@ -1,0 +1,25 @@
+{
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.cursorBlinking": "smooth",
+    "editor.linkedEditing": true,
+    "editor.renderLineHighlight": "none",
+    "editor.minimap.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        80,
+        120,
+        160
+    ],
+    "editor.tabSize": 4,
+    "explorer.confirmDragAndDrop": false,
+    "git.inputValidationSubjectLength": 72,
+    "telemetry.enableTelemetry": false,
+    "extensions.ignoreRecommendations": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.iconTheme": "vs-minimal",
+    "workbench.settings.editor": "json",
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.visible": true,
+    "window.zoomLevel": 0,
+    "window.menuBarVisibility": "hidden"
+}
