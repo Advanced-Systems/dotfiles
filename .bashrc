@@ -145,24 +145,30 @@ findfile(){
 power(){
     echo -e "$(cat /sys/class/power_supply/BAT0/capacity)%"
 }
+
+lss(){
+    du -h --max-depth=1 -- $1 | sort -hr
+}
+
+count(){
+    find $1 -type d | wc -l
+}
 # +++ end macros
 
-# custom shortcuts
+# +++ start aliases
 alias cls=clear
 alias ls='ls -g --color=auto'
-alias lss='du -h --max-depth=1 -- * | sort -hr'
 alias resource='source ~/.bashrc'
 alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
-alias count='find . -type f | wc -l'
 alias repos='cd -- ~/documents/repos'
-
-# dotfiles handler
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
+# +++ end aliases
 
-# custom command prompt
+# +++ start command prompt
 PS1='[$(tput setaf 43)\u$(tput sgr 0)@\h $(tput setaf 41)\W$(tput sgr 0)]'  # [username@hostname]
 PS1+='$(tput setaf 184)$(parse_git_branch)$(tput sgr 0)'                    # (branch)
 PS1+='$(tput setaf 69)$(parse_venv)$(tput sgr 0)'                           # (venv)
 PS1+='\nφ '
+# +++ end command prompt
