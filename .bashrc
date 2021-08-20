@@ -17,6 +17,7 @@ HISTCONTROL='ignoreboth:erasedups'
 # +++ begin environment variables
 export PATH=~/.local/bin:$PATH
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export GIT_EDITOR=nvim
 export USE_EMOJI=0
 export EDITOR=nvim
 export VISUAL=nvim
@@ -115,29 +116,10 @@ grepo(){
     git clone git@github.com:$(git config --global user.name)/"$1".git
 }
 
-mk-ssh-key(){
-    echo -n "Do you want to use your email address that is stored in your global git settings? [Y/n]: "
-    read answer
-    local mail="n/a"
-
-
-    if [[ "$answer" == [Yy] || "$answer" == "" ]]; then
-        mail=$(git config --global user.email)
-    else
-        read -p "Enter an email address: " mail
-    fi
-
-    read -p "Enter a name for the public key file: " pkeyname
-    read -s -p "Enter a passphrase: " passphrase
-
-    # don't overwrite ~/.ssh/id_rsa if it already exists
-    cat /dev/zero | ssh-keygen -t rsa -b 4096 -C $mail -f ~/.ssh/$pkeyname -q -N $passphrase
-    eval $(ssh-agent -s)
-    ssh-add ~/.ssh/$pkeyname
-    cat ~/.ssh/$pkeyname.pub | xclip -selectio clipboard
-
-    echo -e "$(tput setaf 184)Copied the public key to clipboard$(tput sgr 0)"
-    return 0
+pacman-build(){
+    git clone https://aur.archlinux.org/"$1".git
+    (cd $1 && makepkg --syncdeps --clean --install --needed --noconfirm)
+    sudo pacman -U $1/*.pkg.tar.zst --noconfirm
 }
 
 prompt(){
