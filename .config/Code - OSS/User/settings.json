@@ -11,6 +11,8 @@
         160
     ],
     "editor.tabSize": 4,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
     "explorer.confirmDragAndDrop": false,
     "git.inputValidationSubjectLength": 72,
     "telemetry.enableTelemetry": false,
