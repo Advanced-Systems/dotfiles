@@ -117,9 +117,16 @@ grepo(){
 }
 
 pacman-build(){
-    git clone https://aur.archlinux.org/"$1".git
-    (cd $1 && makepkg --syncdeps --clean --install --needed --noconfirm)
-    sudo pacman -U $1/*.pkg.tar.zst --noconfirm
+    local target_dir=~/documents/programs/$1
+    mkdir -p $target_dir
+    git clone https://aur.archlinux.org/"$1".git $target_dir
+    (cd $target_dir && makepkg --syncdeps --clean --install --needed --noconfirm)
+    sudo pacman -U $target_dir/*.pkg.tar.zst --noconfirm
+}
+
+export-inkscape-icon(){
+    # 16x16, 32x32, ..., 1024x1024
+    python ~/bin/export.py $1
 }
 
 prompt(){
