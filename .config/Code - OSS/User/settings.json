@@ -22,6 +22,9 @@
     "workbench.settings.editor": "json",
     "workbench.sideBar.location": "right",
     "workbench.activityBar.visible": true,
-    "window.zoomLevel": 0,
-    "window.menuBarVisibility": "hidden"
+    "window.menuBarVisibility": "hidden",
+    "explorer.confirmDelete": false,
+    "[python]": {
+        "editor.formatOnSave": false
+    }
 }
