@@ -116,6 +116,16 @@ grepo(){
     git clone git@github.com:$(git config --global user.name)/"$1".git
 }
 
+grepo-all(){
+    # TODO: configure ssh-agent to avoid typing in the password all the time
+    local target_dir=~/documents/repos
+    mkdir -p $target_dir
+    for repo in $(python ~/bin/repos.py)
+    do
+        (cd $target_dir && git clone $repo)
+    done
+}
+
 pacman-build(){
     local target_dir=~/documents/programs/$1
     mkdir -p $target_dir
