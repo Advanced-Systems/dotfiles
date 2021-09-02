@@ -15,6 +15,7 @@ HISTCONTROL='ignoreboth:erasedups'
 # +++ end shell variables
 
 # +++ begin environment variables
+export REPOS=$HOME/documents/repos
 export PATH=~/.local/bin:$PATH
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export GIT_EDITOR=nvim
@@ -40,6 +41,20 @@ parse_venv(){
 
 gpip(){
     PIP_REQUIRE_VIRTUALENV=false python -m pip "$@"
+}
+
+pip(){
+    if [[ "$@" == "upgrade-all" ]]; then
+        for pkg in $(python -m pip freeze)
+        do
+            local name=$(echo -e $pkg | cut -f1 -d '=')
+            if [ ! $name = "git*" ]; then
+                python -m pip install --upgrade $pkg
+            fi
+        done
+    else
+        command pip "$@"
+    fi
 }
 
 screenshot(){
@@ -179,7 +194,7 @@ alias resource='source ~/.bashrc'
 alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
-alias repos='cd -- ~/documents/repos'
+alias repos='cd -- $REPOS'
 alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
 # +++ end aliases
 
