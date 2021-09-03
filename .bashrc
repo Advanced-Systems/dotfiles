@@ -133,20 +133,18 @@ grepo(){
 
 grepo-all(){
     # TODO: configure ssh-agent to avoid typing in the password all the time
-    local target_dir=~/documents/repos
-    mkdir -p $target_dir
+    mkdir -p $REPOS
     for repo in $(python ~/bin/repos.py)
     do
-        (cd $target_dir && git clone $repo)
+        (cd $REPOS && git clone $repo)
     done
 }
 
 pacman-build(){
-    local target_dir=~/documents/programs/$1
-    mkdir -p $target_dir
-    git clone https://aur.archlinux.org/"$1".git $target_dir
-    (cd $target_dir && makepkg --syncdeps --clean --install --needed --noconfirm)
-    sudo pacman -U $target_dir/*.pkg.tar.zst --noconfirm
+    mkdir -p $REPOS/$1
+    git clone https://aur.archlinux.org/"$1".git $REPOS/$1
+    (cd $REPOS/$1 && makepkg --syncdeps --clean --install --needed --noconfirm)
+    sudo pacman -U $REPOS/$1/*.pkg.tar.zst --noconfirm
 }
 
 export-inkscape-icon(){
@@ -195,7 +193,7 @@ alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
 alias update='sudo pacman -Syu --noconfirm'
 alias repos='cd -- $REPOS'
-alias config='/usr/bin/git --git-dir=$HOME/documents/repos/dotfiles --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$REPOS/dotfiles --work-tree=$HOME'
 # +++ end aliases
 
 # +++ start command prompt
