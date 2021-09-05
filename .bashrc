@@ -18,6 +18,7 @@ HISTCONTROL='ignoreboth:erasedups'
 export REPOS=$HOME/documents/repos
 export PATH=~/.local/bin:$PATH
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export GIT_EDITOR=nvim
 export USE_EMOJI=0
 export EDITOR=nvim
@@ -26,6 +27,18 @@ export LANG=en_US.UTF-8
 # +++ end environment variables
 
 # +++ begin macros
+_dotnet_bash_complete(){
+  local word=${COMP_WORDS[COMP_CWORD]}
+
+  local completions
+  completions="$(dotnet complete --position "${COMP_POINT}" "${COMP_LINE}" 2>/dev/null)"
+  if [ $? -ne 0 ]; then
+    completions=""
+  fi
+
+  COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+}
+
 parse_git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -196,9 +209,11 @@ alias repos='cd -- $REPOS'
 alias config='/usr/bin/git --git-dir=$REPOS/dotfiles --work-tree=$HOME'
 # +++ end aliases
 
-# +++ start command prompt
+# +++ start misc settings
 PS1='[$(tput setaf 43)\u$(tput sgr 0)@\h $(tput setaf 41)\W$(tput sgr 0)]'  # [username@hostname]
 PS1+='$(tput setaf 184)$(parse_git_branch)$(tput sgr 0)'                    # (branch)
 PS1+='$(tput setaf 69)$(parse_venv)$(tput sgr 0)'                           # (venv)
 PS1+='\nφ '
-# +++ end command prompt
+
+complete -f -F _dotnet_bash_complete dotnet
+# +++ end misc settings
