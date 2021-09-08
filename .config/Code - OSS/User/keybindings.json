@@ -13,6 +13,14 @@
         "command": "workbench.action.togglePanel"
     },
     {
+        "key": "ctrl+shift+k",
+        "command": "workbench.action.closeFolder"
+    },
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.files.openFolder"
+    },
+    {
         "key": "ctrl+tab",
         "command": "workbench.action.nextEditorInGroup"
     },
@@ -35,5 +43,5 @@
     {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown"
-    }
+    },
 ]
