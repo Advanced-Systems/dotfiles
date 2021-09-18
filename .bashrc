@@ -148,8 +148,8 @@ grepo(){
 }
 
 grepo-all(){
-    username=$(git config --global user.name)
-    response=$(curl --silent --show-error -X GET "https://api.github.com/users/$username/repos")
+    local username=$(git config --global user.name)
+    local response=$(curl --silent --show-error -X GET "https://api.github.com/users/$username/repos")
     mkdir -p $REPOS
     for full_name in $(echo $response | jq '.[]' | jq '.full_name' | tr -d '"')
     do
@@ -164,9 +164,13 @@ pacman-build(){
     sudo pacman -U $REPOS/$1/*.pkg.tar.zst --noconfirm
 }
 
-export-inkscape-icon(){
-    # 16x16, 32x32, ..., 1024x1024
-    python ~/bin/export.py $1
+export-icon(){
+    local size=1024
+    while (( size >= 16 ))
+    do
+        inkscape $1 -w $size -h $size -o "${1%.[^.]*}-${size}x${size}.png"
+        size=$(( $size / 2 ))
+    done
 }
 
 prompt(){
