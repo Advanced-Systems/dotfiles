@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # auto-start the ssh agent
-eval $(ssh-agent)
+eval $(ssh-agent) > /dev/null 2>&1
 
 # +++ begin shell variables
 shopt -s histappend
