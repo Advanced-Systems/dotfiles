@@ -146,10 +146,12 @@ grepo(){
 
 grepo-all(){
     # TODO: configure ssh-agent to avoid typing in the password all the time
+    username=$(git config --global user.name)
+    response=$(curl --silent --show-error -X GET "https://api.github.com/users/$username/repos")
     mkdir -p $REPOS
-    for repo in $(python ~/bin/repos.py)
+    for full_name in $(echo $response | jq '.[]' | jq '.full_name' | tr -d '"')
     do
-        (cd $REPOS && git clone $repo)
+        (cd $REPOS && git clone "git@github.com:$full_name.git")
     done
 }
 
