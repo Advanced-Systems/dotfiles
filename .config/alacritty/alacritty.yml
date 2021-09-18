@@ -4,6 +4,10 @@
 
 background_opacity: 0.9
 
+selection:
+  semantic_escape_chars: ",|`:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
 env:
   TERM: alacritty
 window:
@@ -13,9 +17,8 @@ scrolling:
   # scrollback buffer count
   history: 10000
 cursor:
-  style:
-    shape: underline
-    blinking: on
+  style: block
+  unfocused_hollow: true
   # fall back to active normal cursor value
   vi_mode_style: None
 shell:
