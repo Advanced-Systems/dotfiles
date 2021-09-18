@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# auto-start the ssh agent
+eval $(ssh-agent)
+
 # +++ begin shell variables
 shopt -s histappend
 PROMPT_COMMAND='history -a'
@@ -145,7 +148,6 @@ grepo(){
 }
 
 grepo-all(){
-    # TODO: configure ssh-agent to avoid typing in the password all the time
     username=$(git config --global user.name)
     response=$(curl --silent --show-error -X GET "https://api.github.com/users/$username/repos")
     mkdir -p $REPOS
