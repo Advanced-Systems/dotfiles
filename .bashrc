@@ -114,6 +114,9 @@ extract(){
             *.tar)
                 tar xfv "$1"
                 ;;
+            *.gz)
+                gunzip --keep "$1" --verbose
+                ;;
             *.tar.gz)
                 tar xzfv "$1"
                 ;;
