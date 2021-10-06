@@ -31,4 +31,4 @@ key_bindings:
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Equals, mods: Control, action: IncreaseFontSize }
   - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: A, mods: Super, command: { program: "dmenu_run", args: ["-p", "Application Name:"] } }
+  - { key: S, mods: Control|Shift, command: { program: "import", args: ["-window", "root", "screenshot.png"] } }
