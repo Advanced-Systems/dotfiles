@@ -160,6 +160,17 @@ grepo-all(){
     done
 }
 
+track-branches(){
+    if [[ -d ".git" ]]; then
+        for branch in $(git branch -r | grep -v "origin/master" | tr -d ' ' | cut -d '/' -f2)
+        do
+            git branch --track $branch
+        done
+    else
+        echo "$(tput setaf 196)error: not a git repository$(tput sgr 0)"
+    fi
+}
+
 pacman-build(){
     mkdir -p $REPOS/$1
     git clone https://aur.archlinux.org/"$1".git $REPOS/$1
