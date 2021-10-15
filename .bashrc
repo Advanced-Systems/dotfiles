@@ -164,7 +164,7 @@ track-branches(){
     if [[ -d ".git" ]]; then
         for branch in $(git branch -r | grep -v "origin/master" | tr -d ' ' | cut -d '/' -f2)
         do
-            git branch --track $branch
+            git branch --track $branch "origin/$branch"
         done
     else
         echo "$(tput setaf 196)error: not a git repository$(tput sgr 0)"
