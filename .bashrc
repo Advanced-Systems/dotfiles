@@ -5,8 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# auto-start the ssh agent
+# auto-start
 eval $(ssh-agent) > /dev/null 2>&1
+eval "$(register-python-argcomplete pipx)"
 
 # +++ begin shell variables
 shopt -s histappend
