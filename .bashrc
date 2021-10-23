@@ -219,6 +219,15 @@ lss(){
 count(){
     find $1 -type d | wc -l
 }
+
+worldclock(){
+    local timezones=("America/Mazatlan" "America/Asuncion" "Europe/Berlin" "Asia/Tokyo")
+
+    for tz in ${timezones[*]}; do
+        printf "$(tput setaf 184)%-20s$(tput sgr 0)$(env TZ=$tz date)\n" $tz
+    done
+}
+
 # +++ end macros
 
 # +++ start aliases
