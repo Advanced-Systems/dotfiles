@@ -233,6 +233,7 @@ worldclock(){
 # +++ start aliases
 alias cls=clear
 alias ls='ls -g --color=auto'
+alias ssh="TERM=xterm-256color ssh"
 alias resource='source ~/.bashrc'
 alias reload='exec $SHELL -l'
 alias activate='source ./venv/bin/activate'
