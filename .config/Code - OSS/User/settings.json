@@ -33,6 +33,7 @@
     "[python]": {
         "editor.formatOnSave": false,
     },
+    "python.pythonPath": "/usr/bin/python",
     "security.workspace.trust.untrustedFiles": "open",
     "indentRainbow.includedLanguages": [],
     "editor.suggestSelection": "first",
