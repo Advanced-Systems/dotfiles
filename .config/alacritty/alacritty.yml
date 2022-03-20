@@ -2,7 +2,7 @@
 # (C) 2021 Advanced Systems
 #
 
-background_opacity: 0.9
+window.opacity: 0.9
 
 selection:
   semantic_escape_chars: ",|`:\"' ()[]{}<>\t"
